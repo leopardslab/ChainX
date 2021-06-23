@@ -2,10 +2,11 @@ import React from 'react';
 import { Text, View, Button, ImageBackground, StatusBar, ActivityIndicator } from 'react-native';
 import { LANDING_PAGE_BACKGROUND_IMAGE } from '../../images-ref'
 import { splashScreenStyles } from './styles'
+import { renderMessage } from '../../language/lang-switch'
 
 export class LandingPage extends React.Component {
   state = {
-    loadingText: 'Wait... we are loading....'
+    loadingText: renderMessage("loadingPageMessage")
  }
   render() {
     return (
