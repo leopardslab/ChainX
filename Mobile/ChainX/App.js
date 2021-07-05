@@ -1,11 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
+import {StatusBar} from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
+/**
+ * Main component of the application
+ * @return @APP
+ */
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Initial status of Chaix Mobile app</Text>
       <StatusBar style="auto" />
     </View>
   );
