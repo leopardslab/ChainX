@@ -7,8 +7,7 @@ describe('<App />', () => {
     
   it('has development text', () => {
     const tree = renderer.create(<App />).toJSON();
-    expect(tree.children.length).toBe(1);
-    expect(tree.children[0].type).toBe('Text');
-    expect(tree.children[0].children[0]).toBe('Initial status of Chaix Mobile app');
+    expect(tree.props.style.length).toBe(2);
+    expect(tree.props.style[0].flex).toBe(1);
   });
 });

@@ -1,0 +1,1 @@
+export const LANDING_PAGE_BACKGROUND_IMAGE = require('../../assets/private/background-image.jpg'); 

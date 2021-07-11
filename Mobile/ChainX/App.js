@@ -1,6 +1,7 @@
-import {StatusBar} from 'expo-status-bar';
+
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import Navigator from './src/routes/stack'
 
 /**
  * Main component of the application
@@ -8,10 +9,8 @@ import {StyleSheet, Text, View} from 'react-native';
  */
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Initial status of Chaix Mobile app</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Navigator/>
+
   );
 }
 
