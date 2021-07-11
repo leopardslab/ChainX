@@ -5,4 +5,9 @@ export const en = {
     LoadingMessage02 : 'Healthy',
     LoadingMessage03 : 'Safety',
 
+    ProductListProductName: 'Name',
+    ProductListProductBrandCompany: 'Brand/Company',
+    ProductListbarcode: 'Barcode',
+    ProductListOriginCountry: 'Origin',
+
 }

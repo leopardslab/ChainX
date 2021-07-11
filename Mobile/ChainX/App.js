@@ -1,8 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
+
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { NativeBaseProvider, Center } from 'native-base';
-import { LandingPage } from './src/ui/landing-page/index.js'
+import Navigator from './src/routes/stack'
 
 /**
  * Main component of the application
@@ -10,11 +9,7 @@ import { LandingPage } from './src/ui/landing-page/index.js'
  */
 export default function App() {
   return (
-    <NativeBaseProvider>
-      <Center flex={1}>
-        <LandingPage />
-      </Center>
-    </NativeBaseProvider>
+    <Navigator/>
 
   );
 }
