@@ -1,89 +1,84 @@
-import { NativeBaseProvider,Box } from 'native-base';
-import React, { Component } from 'react';
-import { View, Image, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
-import {DataList}  from '../../components/SearchList/index';
-import SearchBar from '../../components/SearchBar/index';
+import { NativeBaseProvider, Box } from "native-base";
+import React, { Component, useState } from "react";
+import {
+  View,
+  Image,
+  Text,
+  FlatList,
+  ActivityIndicator,
+  StyleSheet,
+} from "react-native";
+import { DataList } from "../../components/SearchList/index";
+import {SearchBar} from "../../components/SearchBar/index";
+import { LANDING_PAGE_BACKGROUND_IMAGE } from "../../images-ref/index";
 
 const dataSet = [
-    {
-        id: "1",
-        productName: "Apple",
-        company: "Apple Company A",
-        brand: "AppleBrnd1",
-        barcode: "12345678980",
-        country: "SL",
-        imageURL : "http://placehold.it/200x200?text=Apple"
-    },
-    {
-        id: "1",
-        productName: "Orange",
-        company: "Orange Company A",
-        brand: "OrangeBrnd1",
-        barcode: "12345678980",
-        country: "SL",
-        imageURL : "http://placehold.it/200x200?text=Orange"
-    },
-    {
-        id: "1",
-        productName: "Peanuts",
-        company: "Peanuts Company A",
-        brand: "PeanutsBrnd1",
-        barcode: "12345678980",
-        country: "SL",
-        imageURL : "http://placehold.it/200x200?text=Peanuts"
-    },
-    
+  {
+    id: "1",
+    productName: "Apple",
+    company: "Apple Company A",
+    brand: "AppleBrnd1",
+    barcode: "12345678980",
+    country: "SL",
+    imageURL: LANDING_PAGE_BACKGROUND_IMAGE,
+  },
+  {
+    id: "1",
+    productName: "Orange",
+    company: "Orange Company A",
+    brand: "OrangeBrnd1",
+    barcode: "555512345678980",
+    country: "SL",
+    imageURL: LANDING_PAGE_BACKGROUND_IMAGE,
+  },
+  {
+    id: "1",
+    productName: "Peanuts",
+    company: "Peanuts Company A",
+    brand: "PeanutsBrnd1",
+    barcode: "4790015010281",
+    country: "SL",
+    imageURL: LANDING_PAGE_BACKGROUND_IMAGE,
+  },
 ];
 
-class FlatListDemo extends Component {
-    
-    constructor(props) {
-        super(props);
+function FlatListDemo(props) {
+  const arrayholder = dataSet;
+  const navigator = props.navigation.navigate;
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState(dataSet);
+  const [error, setError] = useState(null);
+  const [value, setValue] = useState("");
 
-        this.state = {
-            loading: false,
-            data: dataSet,
-            error: null,
-        };
+  function searchDataSet(text) {
+    setValue(text);
 
-        this.arrayholder = dataSet;
-    }
+    const newData = arrayholder.filter((item) => {
+      const itemBarcode = `${item.barcode.toUpperCase()}}`;
+      const itemData = `${item.productName.toUpperCase()}}`;
+      const textData = text.toUpperCase();
 
-    componentDidMount() {
-        //ToDo init request
-    }
+      return (
+        itemData.indexOf(textData) > -1 || itemBarcode.indexOf(textData) > -1
+      );
+    });
+    setData(newData);
+  }
 
-    searchDataSet = text => {
-        this.setState({
-            value: text,
-        });
+  function onBarcodeIconClicked(){
+    navigator('BarCodeScanner', {
+        onGoBack: searchDataSet,
+      });
+  }
 
-        const newData = this.arrayholder.filter(item => {
-            const itemData = `${item.productName.toUpperCase()}}`;
-            const textData = text.toUpperCase();
-
-            return itemData.indexOf(textData) > -1;
-        });
-        this.setState({
-            data: newData,
-        });
-    };
-
-
-
-    render() {
-        return (
-            <NativeBaseProvider>
-                <Box style={{paddingTop:5,paddingLeft:10,paddingRight:10}}>
-                <SearchBar onSearchTextChnage={this.searchDataSet}/>
-                <DataList data={this.state.data}/>
-                </Box>
-            </NativeBaseProvider>
-
-        )
-    }
-}
-
-
+  return (
+    <NativeBaseProvider>
+      <Box style={{ paddingTop: 5, paddingLeft: 10, paddingRight: 10 }}>
+        <SearchBar onSearchTextChnage={searchDataSet} searchVal={value} onBarcodeIconClicked={onBarcodeIconClicked}/>
+        <DataList data={data} />
+      </Box>
+    </NativeBaseProvider>
+  );
+};
 
 export default FlatListDemo;

@@ -1,13 +1,14 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-
 import App from '../App';
+jest.useFakeTimers()
+
 
 describe('<App />', () => {
     
-  it('has development text', () => {
+  it('has Main style components', () => {
     const tree = renderer.create(<App />).toJSON();
-    expect(tree.props.style.length).toBe(2);
-    expect(tree.props.style[0].flex).toBe(1);
+    console.log(tree);
+    expect(tree.props.style.flex).toBe(1);
   });
 });

@@ -3,7 +3,7 @@ import { Box, FlatList, Text, Image, View } from "native-base";
 import { listViewItemScreenStyles } from './style';
 import { renderMessage } from '../../language/lang-switch'
 
-export const DataList = (props) => {
+export function DataList(props) {
     const data = props.data;
     return (
         <FlatList
@@ -12,7 +12,8 @@ export const DataList = (props) => {
                 <View style={listViewItemScreenStyles.itemView} key={item.id}>
                     <Image
                         style={listViewItemScreenStyles.listItemthumbnail}
-                        source={{ uri: item.imageURL }}
+                        alt = { item.productName }
+                        source={item.imageURL}
                     />
                     <View style={listViewItemScreenStyles.listItemtextView} >
                         <Text style={listViewItemScreenStyles.productName}  >{renderMessage("ProductListProductName")} : {item.productName}</Text>
@@ -23,6 +24,7 @@ export const DataList = (props) => {
                 </View>
             )}
             keyExtractor={(item) => item.id}
+            
         />
     )
 }
