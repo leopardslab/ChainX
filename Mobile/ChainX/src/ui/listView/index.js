@@ -1,5 +1,5 @@
-import { NativeBaseProvider, Box } from "native-base";
-import React, { Component, useState } from "react";
+import { NativeBaseProvider, Box, useToast } from "native-base";
+import React, { Component, useState, useEffect } from "react";
 import {
   View,
   Image,
@@ -7,62 +7,32 @@ import {
   FlatList,
   ActivityIndicator,
   StyleSheet,
+  ToastAndroid,
 } from "react-native";
 import { DataList } from "../../components/SearchList/index";
 import {SearchBar} from "../../components/SearchBar/index";
 import { LANDING_PAGE_BACKGROUND_IMAGE } from "../../images-ref/index";
+import { useSelector, useDispatch } from "react-redux";
+import { setProductSeachText,getProducts,setProductSeachStatus } from '../../redux/actions';
 
-const dataSet = [
-  {
-    id: "1",
-    productName: "Apple",
-    company: "Apple Company A",
-    brand: "AppleBrnd1",
-    barcode: "12345678980",
-    country: "SL",
-    imageURL: LANDING_PAGE_BACKGROUND_IMAGE,
-  },
-  {
-    id: "1",
-    productName: "Orange",
-    company: "Orange Company A",
-    brand: "OrangeBrnd1",
-    barcode: "555512345678980",
-    country: "SL",
-    imageURL: LANDING_PAGE_BACKGROUND_IMAGE,
-  },
-  {
-    id: "1",
-    productName: "Peanuts",
-    company: "Peanuts Company A",
-    brand: "PeanutsBrnd1",
-    barcode: "4790015010281",
-    country: "SL",
-    imageURL: LANDING_PAGE_BACKGROUND_IMAGE,
-  },
-];
+
 
 function FlatListDemo(props) {
-  const arrayholder = dataSet;
+  const {searchText,searchResult,searchError,isLoading} = useSelector(state => state.searchReducer);
+  const dispatch = useDispatch();
+  const toast = useToast();
+
   const navigator = props.navigation.navigate;
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState(dataSet);
-  const [error, setError] = useState(null);
-  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    dispatch(getProducts(""));
+  },[]);
 
   function searchDataSet(text) {
-    setValue(text);
-
-    const newData = arrayholder.filter((item) => {
-      const itemBarcode = `${item.barcode.toUpperCase()}}`;
-      const itemData = `${item.productName.toUpperCase()}}`;
-      const textData = text.toUpperCase();
-
-      return (
-        itemData.indexOf(textData) > -1 || itemBarcode.indexOf(textData) > -1
-      );
-    });
-    setData(newData);
+    dispatch(setProductSeachText(text));
+    dispatch(setProductSeachStatus(true));
+    dispatch(getProducts(text));
+    
   }
 
   function onBarcodeIconClicked(){
@@ -71,11 +41,20 @@ function FlatListDemo(props) {
       });
   }
 
+  function showError(){
+    ToastAndroid.showWithGravity(
+      "An Error occurred while getting data. Please Try again.",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM
+    );
+  }
+
   return (
     <NativeBaseProvider>
       <Box style={{ paddingTop: 5, paddingLeft: 10, paddingRight: 10 }}>
-        <SearchBar onSearchTextChnage={searchDataSet} searchVal={value} onBarcodeIconClicked={onBarcodeIconClicked}/>
-        <DataList data={data} />
+        <SearchBar isLoading={isLoading} onSearchTextChnage={searchDataSet} searchVal={searchText} onBarcodeIconClicked={onBarcodeIconClicked}/>
+        <DataList data={searchResult}/>
+        { searchError && showError()}
       </Box>
     </NativeBaseProvider>
   );
