@@ -49,11 +49,17 @@ function FlatListDemo(props) {
     );
   }
 
+  function goToNextScreen(itemID){
+    navigator("ItemDetail",{
+          itemId: itemID,
+        });
+  }
+
   return (
     <NativeBaseProvider>
       <Box style={{ paddingTop: 5, paddingLeft: 10, paddingRight: 10 }}>
         <SearchBar isLoading={isLoading} onSearchTextChnage={searchDataSet} searchVal={searchText} onBarcodeIconClicked={onBarcodeIconClicked}/>
-        <DataList data={searchResult}/>
+        <DataList data={searchResult} goToNextScreen={goToNextScreen}/>
         { searchError && showError()}
       </Box>
     </NativeBaseProvider>
