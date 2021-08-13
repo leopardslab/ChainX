@@ -29,7 +29,7 @@ import { RatingModal } from "../../components/modal/index";
 import {
     setUserRatingModalVisible
   } from "../../redux/actions";
-
+import { renderMessage } from '../../language/lang-switch';
 
 function loadInBrowser(url) {
   Linking.openURL(url).catch((err) => console.error("Couldn't load page", err));
@@ -48,6 +48,8 @@ export function BatchData(props) {
   const onBatchSelect = props.onBatchSelect;
   const selectedItemRating = props.selectedItemRating || "N/A";
   const isBatchSelected = props.isBatchSelected;
+
+  const itemDataIsLoading= props.itemDataIsLoading;
 
   const dispatch = useDispatch();
   const { modalVisible, comment, rating } = useSelector(
@@ -92,7 +94,7 @@ export function BatchData(props) {
                 size={5}
                 as={<Ionicons name="md-fitness" />}
               />{" "}
-              Neutritions
+              {renderMessage("Neutritions")}
             </Heading>
             <Accordion.Icon />
           </Accordion.Summary>
@@ -137,7 +139,7 @@ export function BatchData(props) {
                   <Alert w="100%">
                     <Alert.Icon />
                     <Alert.Title>
-                      Select Batch to view the neutrition data.
+                    {renderMessage("NeutritionsSelectBatch")}
                     </Alert.Title>
                   </Alert>
                 )}
@@ -147,7 +149,8 @@ export function BatchData(props) {
                     <Alert w="100%">
                       <Alert.Icon />
                       <Alert.Title>
-                        There is no neutrition data available for this product.
+                      {renderMessage("NoNeutritionsData")}
+                        
                       </Alert.Title>
                     </Alert>
                   )}
@@ -163,7 +166,7 @@ export function BatchData(props) {
                 size={5}
                 as={<Ionicons name="md-fast-food-sharp" />}
               />{" "}
-              Ingredients
+              {renderMessage("Ingredients")}
             </Heading>
             <Accordion.Icon />
           </Accordion.Summary>
@@ -175,7 +178,7 @@ export function BatchData(props) {
                   ingredientsData.length > 0 &&
                   ingredientsData.map((obj, index) => {
                     return (
-                      <Center
+                      <Button
                         size={20}
                         bg="#878f99"
                         rounded="md"
@@ -184,6 +187,7 @@ export function BatchData(props) {
                         }}
                         shadow={5}
                         key={index}
+                        onPress={() => loadInBrowser(obj.refLink)}
                       >
                         <Center
                           _text={{
@@ -193,14 +197,14 @@ export function BatchData(props) {
                         >
                           {obj.name}
                         </Center>
-                      </Center>
+                      </Button>
                     );
                   })}
                 {!isBatchSelected && (
                   <Alert w="100%">
                     <Alert.Icon />
                     <Alert.Title>
-                      Select Batch to view the ingredients data.
+                    {renderMessage("IngredientsSelectBatch")}
                     </Alert.Title>
                   </Alert>
                 )}
@@ -210,7 +214,7 @@ export function BatchData(props) {
                     <Alert w="100%">
                       <Alert.Icon />
                       <Alert.Title>
-                        There is no ingredients data available for this product.
+                      {renderMessage("NoIngredientsData")}
                       </Alert.Title>
                     </Alert>
                   )}
@@ -226,7 +230,7 @@ export function BatchData(props) {
                 size={5}
                 as={<Ionicons name="md-infinite" />}
               />{" "}
-              Suppliers
+              {renderMessage("Suppliers")}
             </Heading>
             <Accordion.Icon />
           </Accordion.Summary>
@@ -257,7 +261,7 @@ export function BatchData(props) {
                   <Alert w="100%">
                     <Alert.Icon />
                     <Alert.Title>
-                      Select Batch to view the supplier data.
+                    {renderMessage("SuppliersSelectBatch")}
                     </Alert.Title>
                   </Alert>
                 )}
@@ -267,7 +271,7 @@ export function BatchData(props) {
                     <Alert w="100%">
                       <Alert.Icon />
                       <Alert.Title>
-                        There is no supplier data available for this product.
+                      {renderMessage("NoSupplierData")}
                       </Alert.Title>
                     </Alert>
                   )}
@@ -283,7 +287,7 @@ export function BatchData(props) {
                 size={5}
                 as={<Ionicons name="md-briefcase" />}
               />{" "}
-              Legal aspect
+              {renderMessage("Legal")}
             </Heading>
             <Accordion.Icon />
           </Accordion.Summary>
@@ -349,7 +353,7 @@ export function BatchData(props) {
                 <Alert w="100%">
                   <Alert.Icon />
                   <Alert.Title>
-                    There is no legal data available for this product.
+                  {renderMessage("NoLegalData")}
                   </Alert.Title>
                 </Alert>
               )}
@@ -365,7 +369,7 @@ export function BatchData(props) {
                   size={5}
                   as={<Ionicons name="md-chatbubble-ellipses" />}
                 />{" "}
-                User feedback{" "}
+                {renderMessage("UserFeedback")}{" "}
               </Heading>
               <Badge tm={5} colorScheme="info">
                 {"" + selectedItemRating}
@@ -385,7 +389,6 @@ export function BatchData(props) {
                       <MaterialCommunityIcons
                         name="comment-edit-outline"
                         size={5}
-                        
                       />
                     }
                     color="white"
@@ -437,7 +440,7 @@ export function BatchData(props) {
                 <Alert w="100%">
                   <Alert.Icon />
                   <Alert.Title>
-                    There is no feedback data available for this product.
+                  {renderMessage("NoFeedbackData")}
                   </Alert.Title>
                 </Alert>
               )}

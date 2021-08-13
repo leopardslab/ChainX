@@ -9,6 +9,7 @@ import {
   HStack,
   Select,
   CheckIcon,
+  Alert,
 } from "native-base";
 import React, { Component, useState, useEffect } from "react";
 import {
@@ -28,8 +29,9 @@ import {
   getProducts,
   setProductSeachStatus,
   getItemData,
-  setItemBatchSelection
+  setItemBatchSelection,
 } from "../../redux/actions";
+import { renderMessage } from '../../language/lang-switch';
 
 function getBatchData(itemData) {
   let output = [];
@@ -41,8 +43,8 @@ function getBatchData(itemData) {
   return output;
 }
 
-function handleBatchSelection(dispatch,selectedItem){
-    dispatch(setItemBatchSelection(selectedItem));
+function handleBatchSelection(dispatch, selectedItem) {
+  dispatch(setItemBatchSelection(selectedItem));
 }
 
 function ItemDetailScreen(props) {
@@ -58,26 +60,17 @@ function ItemDetailScreen(props) {
     selectedItemFeeback,
     ingredientsSupplierData,
     selectedItemRating,
-    isBatchSelected
+    isBatchSelected,
   } = useSelector((state) => state.itemReducer);
   const dispatch = useDispatch();
 
   const selectItemID = props.navigation.state.params.itemId;
-  
+
   const toast = useToast();
   useEffect(() => {
     dispatch(getItemData(selectItemID));
-    toast.show({
-        render: () => {
-          return (
-            <Box bg="teal.500" px={4} py={3} rounded="md" mb={5}>
-              Hi, Nice to see you ( ´ ∀ ` )ﾉ
-            </Box>
-          )
-        },
-      });
   }, []);
-  
+
   return (
     <NativeBaseProvider>
       <Box
@@ -89,9 +82,6 @@ function ItemDetailScreen(props) {
         }}
         shadow={-1}
       />
-      {true && toast.show({
-          title: "Hello world",
-        })}
       <ScrollView
         flex={1}
         px={2}
@@ -101,32 +91,44 @@ function ItemDetailScreen(props) {
       >
         <VStack space={2} alignItems="center">
           <RowData
-            name={"Product Name"}
-            value={itemData.productName ? itemData.productName : ""}>
-            </RowData>
+            name={renderMessage("ProductName")}
+            value={itemData.productName ? itemData.productName : ""}
+            itemDataIsLoading={itemDataIsLoading}
+          ></RowData>
           <RowData
-            name={"Company"}
-            value={itemData.company ? itemData.company : ""}>
-
-          </RowData>
+            name={renderMessage("ProductCompany")}
+            value={itemData.company ? itemData.company : ""}
+            itemDataIsLoading={itemDataIsLoading}
+          ></RowData>
           <RowData
-            name={"Country"}
-            value={itemData.country ? itemData.country : ""}>
-
-            </RowData>
-          <BatchData
-            itemDetails={itemData}
-            dropDownData={getBatchData(itemData)}
-            neutritionData={selectedItemNeutrition}
-            neutritionSummery={selectedItemNeutritionSummery}
-            ingredientsData={selectedItemIngredients}
-            ingredientsSupplierData={ingredientsSupplierData}
-            legalData={selectedItemLegal}
-            selectedItemFeeback={selectedItemFeeback}
-            selectedItemRating={selectedItemRating}
-            onBatchSelect={handleBatchSelection}
-            isBatchSelected= {isBatchSelected }
-          ></BatchData>
+            name={renderMessage("ProductCountry")}
+            value={itemData.country ? itemData.country : ""}
+            itemDataIsLoading={itemDataIsLoading}
+          ></RowData>
+          {!itemDataIsLoading && (
+            <BatchData
+              itemDetails={itemData}
+              dropDownData={getBatchData(itemData)}
+              neutritionData={selectedItemNeutrition}
+              neutritionSummery={selectedItemNeutritionSummery}
+              ingredientsData={selectedItemIngredients}
+              ingredientsSupplierData={ingredientsSupplierData}
+              legalData={selectedItemLegal}
+              selectedItemFeeback={selectedItemFeeback}
+              selectedItemRating={selectedItemRating}
+              onBatchSelect={handleBatchSelection}
+              isBatchSelected={isBatchSelected}
+            ></BatchData>
+          )}
+          {itemDataIsLoading && (
+            <Alert w="100%">
+              <Alert.Icon />
+              <Alert.Title>{renderMessage("Wait")}</Alert.Title>
+              <Alert.Description>
+                {renderMessage("WaitLoadingMessage")}
+              </Alert.Description>
+            </Alert>
+          )}
         </VStack>
       </ScrollView>
     </NativeBaseProvider>

@@ -4,23 +4,34 @@ import  LandingPage  from '../ui/landing-page/index'
 import  FlatListDemo  from '../ui/listView/index';
 import BarCodeScannerView from '../ui/barcode-scanner/index';
 import ItemDetailScreen from '../ui/product-data/index';
+import { renderMessage } from '../language/lang-switch';
 
 const screens = {
     
     LandingPage: {
         screen: LandingPage,
-        name : "Welcome"
+        navigationOptions: ({ navigation }) => ({
+            title: renderMessage("Welcome"),
+        })
     },
     ItemDetail : {
-        screen : ItemDetailScreen
+        screen : ItemDetailScreen,
+        navigationOptions: ({ navigation }) => ({
+            title: renderMessage("ProductDetails"),
+        })
     },
     ProductSearch:{
-        screen: FlatListDemo
+        screen: FlatListDemo,
+        navigationOptions: ({ navigation }) => ({
+            title: renderMessage("ProductSearch"),
+        })
     },
     BarCodeScanner : {
-        screen : BarCodeScannerView
-    },
-    
+        screen : BarCodeScannerView,
+        navigationOptions: ({ navigation }) => ({
+            title: renderMessage("Barcode"),
+        })
+    }, 
 }
 const HomeStack =  createStackNavigator(screens);
 

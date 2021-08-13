@@ -46,20 +46,29 @@ const initDetailState = {
 
 export function itemReducer(state = initDetailState, actions) {
   if (actions.type == SET_ITEM_DETAIL_LOADING) {
-    return { ...state, itemID: actions.payload };
+    return { ...state, itemDataIsLoading: actions.payload };
   } else if (actions.type == SET_ITEM_DETAIL_RESULT) {
     let output = {};
     if (actions.payload.length > 0) {
       output = actions.payload[0];
+      return {
+        ...state,
+        itemData: output,
+        selectedItemLegal: output.legal,
+        selectedItemFeeback: output.feedback.feedbackData,
+        selectedItemRating: output.feedback.overallRating,
+        isBatchSelected: false,
+      };
     }
     return {
-      ...state,
-      itemData: output,
-      selectedItemLegal: output.legal,
-      selectedItemFeeback: output.feedback.feedbackData,
-      selectedItemRating: output.feedback.overallRating,
-      isBatchSelected: false,
-    };
+        ...state,
+        itemData: output,
+        selectedItemLegal: [],
+        selectedItemFeeback: [],
+        selectedItemRating: null,
+        isBatchSelected: false,
+      };
+    
   } else if (actions.type == SET_ITEM_BATCH_SELECTION) {
     if (actions.payload === "NoValue") {
       return {

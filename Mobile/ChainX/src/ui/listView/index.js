@@ -15,8 +15,6 @@ import { LANDING_PAGE_BACKGROUND_IMAGE } from "../../images-ref/index";
 import { useSelector, useDispatch } from "react-redux";
 import { setProductSeachText,getProducts,setProductSeachStatus } from '../../redux/actions';
 
-
-
 function FlatListDemo(props) {
   const {searchText,searchResult,searchError,isLoading} = useSelector(state => state.searchReducer);
   const dispatch = useDispatch();

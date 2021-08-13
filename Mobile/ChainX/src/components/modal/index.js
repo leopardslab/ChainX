@@ -4,6 +4,7 @@ import React, { Component, useState, useEffect } from "react";
 import { Rating } from "react-native-ratings";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserComment, setUserRatingModalVisible } from "../../redux/actions";
+import { renderMessage } from '../../language/lang-switch';
 
 export function RatingModal(props) {
   const [ratingInput, setRatingInput] = useState(0);
@@ -20,12 +21,12 @@ export function RatingModal(props) {
     <Modal isOpen={isOpen}>
       <Modal.Content>
         
-        <Modal.Header>Customer feedback</Modal.Header>
+        <Modal.Header>{renderMessage("UserFeedbackModalHeading")}</Modal.Header>
         <Modal.Body>
-          Provide rating value and comment
+        {renderMessage("UserFeedbackModalTitle")}
           <Input
             mt={4}
-            placeholder="Your comment goes here :)"
+            placeholder={renderMessage("UserFeedbackModalPlaceHolder")}
             value={commentInput}
             onChange={handleCommentChange}
           />
@@ -48,13 +49,13 @@ export function RatingModal(props) {
                 dispatch(setUserComment({ commentInput, ratingInput }));
               }}
             >
-              SAVE
+              {renderMessage("Save")}
             </Button>
             <Button colorScheme="secondary"
             onPress={() => {
                 dispatch(setUserRatingModalVisible(false));
               }}
-              >CLOSE</Button>
+              >{renderMessage("Close")}</Button>
           </Button.Group>
         </Modal.Footer>
       </Modal.Content>
