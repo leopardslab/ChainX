@@ -8,7 +8,6 @@ describe('<App />', () => {
     
   it('has Main style components', () => {
     const tree = renderer.create(<App />).toJSON();
-    console.log(tree);
     expect(tree.props.style.flex).toBe(1);
   });
 });

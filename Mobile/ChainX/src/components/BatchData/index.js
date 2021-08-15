@@ -12,7 +12,6 @@ import {
   Accordion,
   Icon,
   Badge,
-  Alert,
   Button,
   Row,
   IconButton,
@@ -26,10 +25,9 @@ import React, { Component, useState, useEffect } from "react";
 import { Text, Linking } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { RatingModal } from "../../components/modal/index";
-import {
-    setUserRatingModalVisible
-  } from "../../redux/actions";
-import { renderMessage } from '../../language/lang-switch';
+import { setUserRatingModalVisible } from "../../redux/actions";
+import { renderMessage } from "../../language/lang-switch";
+import { AlertMessages } from '../AlertInUI/index';
 
 function loadInBrowser(url) {
   Linking.openURL(url).catch((err) => console.error("Couldn't load page", err));
@@ -49,7 +47,7 @@ export function BatchData(props) {
   const selectedItemRating = props.selectedItemRating || "N/A";
   const isBatchSelected = props.isBatchSelected;
 
-  const itemDataIsLoading= props.itemDataIsLoading;
+  const itemDataIsLoading = props.itemDataIsLoading;
 
   const dispatch = useDispatch();
   const { modalVisible, comment, rating } = useSelector(
@@ -136,23 +134,12 @@ export function BatchData(props) {
                     );
                   })}
                 {!isBatchSelected && (
-                  <Alert w="100%">
-                    <Alert.Icon />
-                    <Alert.Title>
-                    {renderMessage("NeutritionsSelectBatch")}
-                    </Alert.Title>
-                  </Alert>
+                  <AlertMessages alertMessageKey="NeutritionsSelectBatch" />
                 )}
                 {isBatchSelected &&
                   neutritionData &&
                   neutritionData.length == 0 && (
-                    <Alert w="100%">
-                      <Alert.Icon />
-                      <Alert.Title>
-                      {renderMessage("NoNeutritionsData")}
-                        
-                      </Alert.Title>
-                    </Alert>
+                    <AlertMessages alertMessageKey="NoNeutritionsData" />
                   )}
               </HStack>
             </ScrollView>
@@ -201,22 +188,12 @@ export function BatchData(props) {
                     );
                   })}
                 {!isBatchSelected && (
-                  <Alert w="100%">
-                    <Alert.Icon />
-                    <Alert.Title>
-                    {renderMessage("IngredientsSelectBatch")}
-                    </Alert.Title>
-                  </Alert>
+                  <AlertMessages alertMessageKey="IngredientsSelectBatch" />
                 )}
                 {isBatchSelected &&
                   ingredientsData &&
                   ingredientsData.length == 0 && (
-                    <Alert w="100%">
-                      <Alert.Icon />
-                      <Alert.Title>
-                      {renderMessage("NoIngredientsData")}
-                      </Alert.Title>
-                    </Alert>
+                    <AlertMessages alertMessageKey="NoIngredientsData" />
                   )}
               </HStack>
             </ScrollView>
@@ -258,22 +235,12 @@ export function BatchData(props) {
                     );
                   })}
                 {!isBatchSelected && (
-                  <Alert w="100%">
-                    <Alert.Icon />
-                    <Alert.Title>
-                    {renderMessage("SuppliersSelectBatch")}
-                    </Alert.Title>
-                  </Alert>
+                  <AlertMessages alertMessageKey="SuppliersSelectBatch" />
                 )}
                 {isBatchSelected &&
                   ingredientsSupplierData &&
                   ingredientsSupplierData.length == 0 && (
-                    <Alert w="100%">
-                      <Alert.Icon />
-                      <Alert.Title>
-                      {renderMessage("NoSupplierData")}
-                      </Alert.Title>
-                    </Alert>
+                    <AlertMessages alertMessageKey="NoSupplierData" />
                   )}
               </HStack>
             </ScrollView>
@@ -350,12 +317,7 @@ export function BatchData(props) {
                   );
                 })}
               {legalData && legalData.length == 0 && (
-                <Alert w="100%">
-                  <Alert.Icon />
-                  <Alert.Title>
-                  {renderMessage("NoLegalData")}
-                  </Alert.Title>
-                </Alert>
+                <AlertMessages alertMessageKey="NoLegalData" />
               )}
             </VStack>
           </Accordion.Details>
@@ -376,8 +338,8 @@ export function BatchData(props) {
               </Badge>
               <IconButton
                 bg={"red"}
-                onPress={()=>{
-                    dispatch(setUserRatingModalVisible(true));
+                onPress={() => {
+                  dispatch(setUserRatingModalVisible(true));
                 }}
                 variant="solid"
                 icon={
@@ -437,12 +399,7 @@ export function BatchData(props) {
                   );
                 })}
               {selectedItemFeeback && selectedItemFeeback.length == 0 && (
-                <Alert w="100%">
-                  <Alert.Icon />
-                  <Alert.Title>
-                  {renderMessage("NoFeedbackData")}
-                  </Alert.Title>
-                </Alert>
+                <AlertMessages alertMessageKey="NoFeedbackData" />
               )}
             </VStack>
           </Accordion.Details>
