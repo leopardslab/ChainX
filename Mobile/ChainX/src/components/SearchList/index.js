@@ -13,7 +13,7 @@ export function DataList(props) {
                     <Image
                         style={listViewItemScreenStyles.listItemthumbnail}
                         alt = { item.productName }
-                        source={item.imageURL}
+                        source={{uri:item.imageURL}}
                     />
                     <View style={listViewItemScreenStyles.listItemtextView} >
                         <Text style={listViewItemScreenStyles.productName}  >{renderMessage("ProductListProductName")} : {item.productName}</Text>
