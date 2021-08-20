@@ -31,7 +31,7 @@ describe("<SearchBar />", () => {
     const result = renderer.getRenderOutput();
 
     const searchComponent = result.props.children.props;
-    expect(searchComponent.placeholder).toBe("Search Product");
+    expect(searchComponent.placeholder).toBe("Search Product / Barcode");
     expect(result.props.children.props.value).toBe(10);
     expect(searchComponent.bg).toBe("gray.200");
     expect(searchComponent.InputLeftElement.props.as.type.name).toBe("Icon");

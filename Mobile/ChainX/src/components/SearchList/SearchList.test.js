@@ -38,9 +38,10 @@ describe("<DataList />", () => {
         imageURL: "Image path",
       },
     });
-    expect(out.props.children[0].props.alt).toBe("Apple");
-    expect(out.props.children[1].props.children[0].props.children[2]).toBe(
-      "Apple"
+    
+    expect(out.props.children[0].props.children.props.alt).toBe("Apple");
+    expect(out.props.children[0].props.children.props.source.uri).toBe(
+      "Image path"
     );
     expect(out.props.children[1].props.children[1].props.children[2]).toBe(
       "AppleBrnd1/Apple Company A"
@@ -51,7 +52,6 @@ describe("<DataList />", () => {
     expect(out.props.children[1].props.children[3].props.children[2]).toBe(
       "SL"
     );
-    expect(out.props.children[0].props.source).toBe("Image path");
   });
 
 });

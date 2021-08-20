@@ -15,8 +15,6 @@ import { LANDING_PAGE_BACKGROUND_IMAGE } from "../../images-ref/index";
 import { useSelector, useDispatch } from "react-redux";
 import { setProductSeachText,getProducts,setProductSeachStatus } from '../../redux/actions';
 
-
-
 function FlatListDemo(props) {
   const {searchText,searchResult,searchError,isLoading} = useSelector(state => state.searchReducer);
   const dispatch = useDispatch();
@@ -49,11 +47,17 @@ function FlatListDemo(props) {
     );
   }
 
+  function goToNextScreen(itemID){
+    navigator("ItemDetail",{
+          itemId: itemID,
+        });
+  }
+
   return (
     <NativeBaseProvider>
       <Box style={{ paddingTop: 5, paddingLeft: 10, paddingRight: 10 }}>
         <SearchBar isLoading={isLoading} onSearchTextChnage={searchDataSet} searchVal={searchText} onBarcodeIconClicked={onBarcodeIconClicked}/>
-        <DataList data={searchResult}/>
+        <DataList data={searchResult} goToNextScreen={goToNextScreen}/>
         { searchError && showError()}
       </Box>
     </NativeBaseProvider>

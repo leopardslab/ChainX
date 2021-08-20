@@ -2,6 +2,7 @@ import React from "react";
 import { VStack, Input, Button, IconButton, Icon, Text, NativeBaseProvider, Center, Box, Spinner } from "native-base";
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { renderMessage } from '../../language/lang-switch';
 
 
 export function SearchBar(props){
@@ -15,7 +16,7 @@ export function SearchBar(props){
   return (
       <Center width="100%" space={2}>
         <Input
-          placeholder="Search Product"
+          placeholder={renderMessage("SearchProductPlaceHolder")}
           variant="filled"
           width="100%"
           bg="gray.200"
