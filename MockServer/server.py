@@ -1,7 +1,4 @@
-import http.server
-import socketserver
 from urllib import parse
-#from urlparse import parse_qs
 import json
 import time
 products = [
