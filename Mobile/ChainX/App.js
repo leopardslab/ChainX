@@ -1,7 +1,8 @@
-
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Navigator from './src/routes/stack'
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import Navigator from "./src/routes/stack";
+import { Provider } from "react-redux";
+import { Store } from "./src/redux/store";
 
 /**
  * Main component of the application
@@ -9,16 +10,17 @@ import Navigator from './src/routes/stack'
  */
 export default function App() {
   return (
-    <Navigator/>
-
+    <Provider store={Store}>
+      <Navigator />
+    </Provider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

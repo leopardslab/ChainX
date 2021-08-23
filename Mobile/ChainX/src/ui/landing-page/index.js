@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { LANDING_PAGE_BACKGROUND_IMAGE } from '../../images-ref'
 import { splashScreenStyles } from './styles'
 import { NativeBaseProvider, Progress, Box, Text, Divider, Flex, Center } from 'native-base';
-import { renderMessage } from '../../language/lang-switch'
+import { renderMessage } from '../../language/lang-switch';
 
 
 
